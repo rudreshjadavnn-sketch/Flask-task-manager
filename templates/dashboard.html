@@ -1,0 +1,246 @@
+    <html>
+
+    <head>
+
+        <style>
+
+            body{
+                margin: 0;
+                padding: 0;
+            }
+
+            .header{
+                display: flex;
+                background: rgb(196, 40, 220);
+                padding: 20px;
+                justify-content: space-between;
+                color: white;
+            }
+
+            .result{
+                background: rgb(191, 195, 222);
+                padding: 20px;
+                margin: 20px;
+                border-radius: 20px;
+                display: none;
+            }
+
+            #overlay{
+
+                position: fixed;
+
+                top: 0;
+                left: 0;
+
+                width: 100%;
+                height: 100%;
+
+                background: rgba(0,0,0,0.4);
+
+                display: none;
+
+                align-items: center;
+                justify-content: center;
+            }
+
+            .task{
+
+                padding: 20px;
+
+                background: rgb(140, 242, 213);
+
+                display: flex;
+
+                align-items: center;
+                justify-content: center;
+
+                flex-direction: column;
+
+                border-radius: 20px;
+            }
+
+            input{
+                padding: 10px;
+                border-radius: 7px;
+                border: none;
+            }
+
+            button{
+                padding: 7px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            .card{
+                background: white;
+                padding: 5px 15px;
+                margin-top: 5px;
+                border-radius: 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .card button{
+                background: rgba(232, 35, 35, 0.763);
+                color: white;
+            }
+            #noresult{
+                display: none;
+                align-items: center;
+                justify-content: center;
+                display: flex;
+                width: 100%;
+                height: 80%;
+            }
+            .noresult-text{
+                color: red;
+                font-size: 30px;
+            }
+            #welname{
+                font-size: 25px;
+            }
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <div id="overlay">
+
+            <div class="task">
+
+                <div>Add Your Task</div><br>
+
+                <input type="text" placeholder="Enter your name" id="name"><br>
+
+                <input type="text" placeholder="Enter subject name" id="subj"><br>
+
+                <button onclick="addtask()">Add Task</button>
+
+            </div>
+
+        </div>
+
+        <div class="header">
+
+            <div id="welname"></div>
+
+            <button onclick="taskcard()">Add Tasks</button>
+            <button onclick="logout()">Logout</button>
+
+        </div>
+
+        <br>
+        <div id="noresult"><div class="noresult-text">No Taks Added</div></div>
+        <div class="result" id="resultdiv">
+        </div>
+
+        <script>
+            if(!localStorage.getItem("token")){
+                window.location.href="/loginpage";
+            }
+
+            function taskcard(){
+
+                document.getElementById("overlay").style.display = "flex";
+            }
+
+            async function addtask(){
+                data={
+                    name: document.getElementById("name").value,
+                    subj: document.getElementById("subj").value
+                };
+                const response = await fetch("http://127.0.0.1:5000/addtask",
+                    {
+                        method: "POST",
+                        headers: {
+                            "content-Type": "application/json",
+                            "Authorization": localStorage.getItem("token")
+                        },
+                        body: JSON.stringify(data)
+                    });
+                    const result= await response.json();
+                    if(result.message=="Task Added"){
+                        alert("Task Added");
+                        loadtask();
+                        document.getElementById("overlay").style.display = "none";
+                        document.getElementById("name").value = "";
+                        document.getElementById("subj").value = "";
+                    }
+                    else{
+                        alert("Invalid Input")
+                    }
+            }
+
+            async function loadtask(){
+                const response= await fetch("http://127.0.0.1:5000/gettask",{
+                    method: "POST",
+                    headers:{
+                        "content-Type":"application/json",
+                         "Authorization": localStorage.getItem("token")
+                    },
+                });
+
+                const task=await response.json();
+                const resultdiv=document.getElementById("resultdiv");
+                const noresult=document.getElementById("noresult");
+                resultdiv.innerHTML="";
+                if(task.length > 0){
+                    resultdiv.style.display = "block";
+                    noresult.style.display = "none";
+                }
+                else{
+                    resultdiv.style.display = "none";
+                    noresult.style.display="flex";
+                }
+                task.forEach(task => { 
+                resultdiv.innerHTML+= `    
+                <div class="card">
+                    <div>
+                    <h3>${task.name}</h3>
+                    <p>${task.subj}</p>
+                    </div>
+                    <div><button type="button" onclick="deletetask('${task.id}')">Delete</button></div>
+                    </div>
+                    `;
+                });
+            }
+            async function deletetask(taskid){
+                data={
+                    taskid:taskid
+                }
+                const response=await fetch("http://127.0.0.1:5000/deletetask",{
+                    method:"POST",
+                    headers:{
+                        "content-Type":"application/json"
+                    },
+                    body:JSON.stringify(data)
+                });
+                const result=await response.json();
+                if(result.message == "Task Deleted"){
+                    alert("Task Deleted")
+                    loadtask();
+                }
+            }
+            function parseJwt(token){
+                return JSON.parse(atob(token.split('.')[1]));
+            }
+            const token = localStorage.getItem("token");
+            const decoded = parseJwt(token);
+            document.getElementById("welname").innerHTML = "Welcome " + decoded.name;
+            loadtask();
+
+            function logout(){
+                localStorage.clear();
+                window.location.href="/loginpage";
+            }
+        </script>
+
+    </body>
+
+    </html>
+
+
+
+

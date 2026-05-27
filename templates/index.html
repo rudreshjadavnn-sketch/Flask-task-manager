@@ -1,0 +1,67 @@
+    <html>
+        <head>
+            <style>
+                body{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                div{
+                    background: purple;
+                    padding: 20px;
+                    border-radius: 10px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                }
+                input{
+                    padding: 10px;
+                    border-radius: 7px;
+                }
+                button{
+                    padding: 5px 20px;
+                    background: rgb(61, 165, 249);
+                    border: none;
+                    color: white;
+                    border-radius: 5px;
+                }
+            </style>
+        </head>
+        <body>
+            <div>
+                <h2 style="color:white;">Register</h2>
+                <input type="text" placeholder="Enter youre name" id="name"><br>
+                <input type="mail" placeholder="Enter youre email" id="email"><br>
+                <input type="password" placeholder="Enter password" id="password"><br>
+                <button onclick="register()">Register</button>
+            </div>
+            <script>
+                async function register(){
+                    data={
+                        name:document.getElementById("name").value,
+                        email:document.getElementById("email").value,
+                        password:document.getElementById("password").value
+                    };
+                    const response=await fetch("http://127.0.0.1:5000/index",
+                    {
+                        method:"POST",
+                        headers:{
+                            "content-Type":"application/json"
+                        },
+                        body:JSON.stringify(data)
+                    });
+                    const result=await response.json();
+                    if(result.meassage=="Register success"){
+                        localStorage.setItem("email",data.email);
+                        localStorage.setItem("name",data.name);
+                        alert("Register Success")
+                        window.location.href="/loginpage";
+                    }
+                    else{
+                    alert(result.meassage);
+                    }
+                }
+            </script>
+        </body>
+    </html>

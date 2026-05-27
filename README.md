@@ -33,6 +33,7 @@ A simple full-stack Flask web application with:
 - Flask
 - PyMongo
 - JWT (PyJWT)
+- bcrypt
 
 ## Frontend
 - HTML
@@ -49,10 +50,6 @@ A simple full-stack Flask web application with:
 student_task/
 │
 ├── app.py
-├── static/
-│   ├── style.css
-│   └── script.js
-│
 ├── templates/
 │   ├── index.html
 │   ├── login.html

@@ -7,34 +7,41 @@
                     align-items: center;
                 }
                 div{
-                    background: purple;
-                    padding: 20px;
-                    border-radius: 10px;
+                    background: rgb(53, 223, 197);
+                    padding: 20px 30px;
+                    border-radius: 15px;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     justify-content: center;
+                    color: black;
                 }
                 input{
-                    padding: 10px;
-                    border-radius: 7px;
+                    padding: 15px;
+                    border-radius: 10px;
+                    border: none;
+                    outline: none;
+                    width: 300px;
+
                 }
                 button{
-                    padding: 5px 20px;
-                    background: rgb(61, 165, 249);
+                    padding: 10px 25px;
+                    background: rgb(239, 61, 249);
                     border: none;
                     color: white;
                     border-radius: 5px;
+                    cursor: pointer;
                 }
             </style>
         </head>
         <body>
             <div>
-                <h2 style="color:white;">Register</h2>
+                <h1>Register</h1><br>
                 <input type="text" placeholder="Enter youre name" id="name"><br>
                 <input type="mail" placeholder="Enter youre email" id="email"><br>
-                <input type="password" placeholder="Enter password" id="password"><br>
-                <button onclick="register()">Register</button>
+                <input type="password" placeholder="Enter password" id="password"><br><br>
+                <button onclick="register()">Register</button><br>
+                <p>Already user? <a href="/loginpage">Login</a></p>
             </div>
             <script>
                 async function register(){

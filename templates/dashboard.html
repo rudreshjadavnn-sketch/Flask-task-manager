@@ -7,56 +7,47 @@
             body{
                 margin: 0;
                 padding: 0;
+                background-color: rgb(214, 208, 188);
             }
 
             .header{
                 display: flex;
-                background: rgb(196, 40, 220);
+                background: rgb(62, 4, 71);
                 padding: 20px;
                 justify-content: space-between;
                 color: white;
             }
 
             .result{
-                background: rgb(191, 195, 222);
-                padding: 20px;
-                margin: 20px;
-                border-radius: 20px;
+                background: none;
+                padding: 10px;
+                margin-left: 150px;
+                margin-right: 150px;
+                margin-top: 40px;
+                border-radius: 10px;
                 display: none;
             }
 
             #overlay{
-
                 position: fixed;
-
                 top: 0;
                 left: 0;
-
                 width: 100%;
                 height: 100%;
-
                 background: rgba(0,0,0,0.4);
-
                 display: none;
-
                 align-items: center;
                 justify-content: center;
             }
 
             .task{
-
                 padding: 20px;
-
                 background: rgb(140, 242, 213);
-
                 display: flex;
-
                 align-items: center;
                 justify-content: center;
-
                 flex-direction: column;
-
-                border-radius: 20px;
+                border-radius: 10px;
             }
 
             input{
@@ -71,18 +62,51 @@
                 border-radius: 5px;
                 cursor: pointer;
             }
-            .card{
-                background: white;
-                padding: 5px 15px;
-                margin-top: 5px;
+           .card{
+            background: #ffffff;
+            padding: 10px 30px;
+            margin-top: 14px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;align-items: center;
+            box-shadow:0 4px 15px rgba(0,0,0,0.06),0 1px 3px rgba(0,0,0,0.04);
+            transition: 0.25s ease;
+        }
+        .card:hover{
+            transform: translateY(-3px);
+            box-shadow:0 8px 20px rgba(0,0,0,0.08),0 3px 6px rgba(0,0,0,0.05);
+        }
+        .card h3{
+            margin: 0;
+            font-size: 25px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        .card p{
+            margin-top: 10px;
+            margin-bottom: 0;
+            font-size: 18px;
+            color: #6b7280;
+        }
+            .task input{
+                padding: 15px;
                 border-radius: 10px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
+                border: none;
+                outline: none;
             }
-            .card button{
-                background: rgba(232, 35, 35, 0.763);
+            .task button{
                 color: white;
+                background: rgb(74, 79, 228);
+            }
+            .card-btn .btn2{
+                background: white;
+                color: #ef4444;
+                border: 2px solid #ef4444;
+                padding: 5px 15px;
+                border-radius: 10px;
+                font-size: 18px;
+                font-weight: 600;
             }
             #noresult{
                 display: none;
@@ -93,11 +117,68 @@
                 height: 80%;
             }
             .noresult-text{
-                color: red;
+                color: rgba(22, 13, 13, 0.562);
                 font-size: 30px;
             }
             #welname{
                 font-size: 25px;
+            }
+            .logout-btn{
+                color: white;
+                background: rgba(255, 0, 0, 0.685);
+            }
+            #search{
+                display: flex;
+                justify-content: space-between;
+                margin-left: 95px; 
+                margin-right: 90px;
+                align-items: center;
+                display: none;
+            }
+            #search input{
+                width: 400px;
+                padding: 15px;
+            }
+            #notask{
+                display: none;
+                justify-content: center;
+                align-items: center;
+                padding: 20px;
+                font-size: 25px;
+                color: red;
+            }
+            .card-btn{
+                display: flex;
+                gap: 20px;
+            }
+            .card-btn .btn1{
+                background: white;
+                color: #2563eb;
+                border: 2px solid #2563eb;
+                padding: 5px 15px;
+                border-radius: 10px;
+                font-size: 18px;
+                font-weight: 600;
+            }
+            #overlay1{
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.4);
+                display: none;
+                align-items: center;
+                justify-content: center;
+            }
+            .task1{
+                padding: 20px;
+                background: rgb(140, 242, 213);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                border-radius: 10px;
             }
 
         </style>
@@ -121,25 +202,46 @@
             </div>
 
         </div>
+        <div id="overlay1">
+
+            <div class="task1">
+
+                <div>Add Your Task</div><br>
+
+                <input type="text" placeholder="Enter task name" id="name1" required><br>
+
+                <input type="text" placeholder="Enter subject name" id="subj1" required><br>
+
+                <button onclick="updatetask()">Update Task</button>
+
+            </div>
+
+        </div>
 
         <div class="header">
 
             <div id="welname"></div>
 
             <button onclick="taskcard()">Add Tasks</button>
-            <button onclick="logout()">Logout</button>
+            <button class="logout-btn" onclick="logout()">Logout</button>
 
         </div>
 
         <br>
         <div id="noresult"><div class="noresult-text">No Tasks Added</div></div>
+        <div id="search">
+            <div><h1>Tasks</h1></div>
+            <div><input type="text" placeholder="Search tasks" oninput="searchtask()" id="searchinput"></div>
+        </div>
         <div class="result" id="resultdiv">
+            <div id="notask">No Task Found</div>
         </div>
 
         <script>
             if(!localStorage.getItem("token")){
                 window.location.href="/loginpage";
             }
+            let currentTaskId = "";
 
             function taskcard(){
 
@@ -190,10 +292,14 @@
                 const task=await response.json();
                 const resultdiv=document.getElementById("resultdiv");
                 const noresult=document.getElementById("noresult");
-                resultdiv.innerHTML="";
+                const searchbar=document.getElementById("search");
+                resultdiv.innerHTML=`
+                <div id="notask">No Task Found</div>
+                `;
                 if(task.length > 0){
                     resultdiv.style.display = "block";
                     noresult.style.display = "none";
+                    searchbar.style.display = "flex";
                 }
                 else{
                     resultdiv.style.display = "none";
@@ -206,7 +312,10 @@
                     <h3>${task.name}</h3>
                     <p>${task.subj}</p>
                     </div>
-                    <div><button type="button" onclick="deletetask('${task.id}')">Delete</button></div>
+                    <div class="card-btn">
+                    <div><button class="btn1" type="button" onclick="openupdate('${task.id}')">Update</button></div>
+                    <div><button class="btn2" type="button" onclick="deletetask('${task.id}')">Delete</button></div>
+                    </div>
                     </div>
                     `;
                 });
@@ -229,6 +338,37 @@
                     loadtask();
                 }
             }
+
+
+            async function updatetask(){
+                data={
+                    taskid:currentTaskId,
+                    name: document.getElementById("name1").value,
+                    subj: document.getElementById("subj1").value
+                }
+                if(data.name=="" || data.subj==""){
+                    alert("Please enter task name and subject")
+                }
+                else{
+                const response = await fetch("http://127.0.0.1:5000/updatetask",{
+                    method:"POST",
+                    headers:{
+                        "content-Type":"application/json",
+                        "Authorization":localStorage.getItem("token")
+                    },
+                    body:JSON.stringify(data)
+                });
+                result= await response.json();
+                if(result.message=="Task Updated"){
+                    alert("Task Updated");
+                    document.getElementById("overlay1").style.display="none";
+                    loadtask();
+                }
+            }
+
+        }
+        
+
             function parseJwt(token){
                 return JSON.parse(atob(token.split('.')[1]));
             }
@@ -236,6 +376,33 @@
             const decoded = parseJwt(token);
             document.getElementById("welname").innerHTML = "Welcome " + decoded.name;
             loadtask();
+
+            function searchtask(){
+                const search =document.getElementById("searchinput").value.toLowerCase();
+                const cards =document.querySelectorAll(".card");
+                const notask =document.getElementById("notask");
+                let found = false;
+                cards.forEach(card => {
+                    const taskname =card.querySelector("h3").innerText.toLowerCase();
+                    if(taskname.includes(search)){
+                        card.style.display = "flex";
+                        found = true;
+                    }
+                    else{
+                        card.style.display = "none";
+                    }
+                });
+                if(found){
+                    notask.style.display = "none";
+                }
+                else{
+                    notask.style.display = "flex";
+                }
+            }
+            function openupdate(taskid){
+                currentTaskId = taskid;
+                document.getElementById("overlay1").style.display="flex";
+            }
 
             function logout(){
                 localStorage.clear();

@@ -6,6 +6,7 @@ import datetime
 import bcrypt
 
 app=Flask(__name__)
+
 app.config["SECRET_KEY"]="mysecretkey"
 
 client=MongoClient("mongodb://localhost:27017/")
@@ -16,9 +17,11 @@ tasks_collection=db["tasks"]
 @app.route("/")
 def home():
     return render_template("index.html")
+
 @app.route("/loginpage")
 def loginpage():
     return render_template("login.html")
+
 @app.route("/dashboard")
 def dasboard():
     return render_template("dashboard.html")
@@ -85,7 +88,7 @@ def addtask():
     token = request.headers.get("Authorization")
     if not token:
         return jsonify({
-            "message":"Unauthorized"
+            "message":"Unauthorized"    
         }), 401
 
     decoded = jwt.decode(
@@ -98,6 +101,7 @@ def addtask():
     data = request.json
     name = data.get('name')
     subj = data.get('subj')
+
     tasks_collection.insert_one({
         "email": email,
         "taskname": name,
@@ -143,6 +147,50 @@ def gettasks():
 
     return jsonify(result)
 
+@app.route("/updatetask", methods=["POST"])
+def updatetask():
+
+    token = request.headers.get("Authorization")
+
+    if not token:
+
+        return jsonify({
+            "message":"Unauthorized"
+        }), 401
+
+    decoded = jwt.decode(
+        token,
+        app.config["SECRET_KEY"],
+        algorithms=["HS256"]
+    )
+
+    data = request.json
+
+    taskid = data.get("taskid")
+    name = data.get("name")
+    subj = data.get("subj")
+
+    tasks_collection.update_one(
+
+        {
+            "_id": ObjectId(taskid),
+            "email": decoded["email"]
+        },
+
+        {
+            "$set": {
+                "taskname": name,
+                "subj": subj
+            }
+        }
+    )
+
+    return jsonify({
+        "message":"Task Updated"
+    })
+
+
+
 @app.route("/deletetask", methods=["POST"])
 def deletetask():
     token = request.headers.get("Authorization")
@@ -172,6 +220,7 @@ def deletetask():
     return jsonify({
         "message":"Task Deleted"
     })
+
 
 if __name__=="__main__":
     app.run(debug=True,port=5000)

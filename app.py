@@ -145,11 +145,8 @@ def gettasks():
 
 @app.route("/deletetask", methods=["POST"])
 def deletetask():
-
     token = request.headers.get("Authorization")
-
     if not token:
-
         return jsonify({
             "message":"Unauthorized"
         }), 401

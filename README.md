@@ -72,7 +72,7 @@ git clone https://github.com/rudreshjadavnn-sketch/flask-task-manager.git
 Clone repository:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/flask-task-manager.git
+git clone https://github.com/rudreshjadavnn-sketch/flask-task-manager.git
 ```
 
 ---

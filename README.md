@@ -64,4 +64,81 @@ student_task/
 ## 1. Clone Repository
 
 ```bash
+git clone https://github.com/rudreshjadavnn-sketch/flask-task-manager.git
+# How To Run Project In VS Code
+
+## Step 1 — Download Project
+
+Clone repository:
+
+```bash
 git clone https://github.com/YOUR_USERNAME/flask-task-manager.git
+```
+
+---
+
+## Step 2 — Open Project In VS Code
+
+Open VS Code
+
+Click:
+
+File → Open Folder
+
+Select project folder:
+
+```text
+Flask-task-manager
+```
+
+---
+
+## Step 3 — Open Terminal
+
+In VS Code click:
+
+```text
+Terminal → New Terminal
+```
+
+---
+
+## Step 4 — Install Required Packages
+
+Run:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Step 5 — Start MongoDB
+
+Make sure MongoDB server is running on:
+
+```text
+mongodb://localhost:27017/
+```
+
+---
+
+## Step 6 — Run Flask Application
+
+Run:
+
+```bash
+python app.py
+```
+
+---
+
+## Step 7 — Open Browser
+
+Open:
+
+```text
+http://127.0.0.1:5000
+```
+
+Now project will run successfully.

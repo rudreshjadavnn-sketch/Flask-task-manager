@@ -228,7 +228,6 @@
         </div>
 
         <br>
-        <div id="noresult"><div class="noresult-text">No Tasks Added</div></div>
         <div id="search">
             <div><h1>Tasks</h1></div>
             <div><input type="text" placeholder="Search tasks" oninput="searchtask()" id="searchinput"></div>
@@ -236,6 +235,7 @@
         <div class="result" id="resultdiv">
             <div id="notask">No Task Found</div>
         </div>
+         <div id="noresult"><div class="noresult-text">No Tasks Added</div></div>
 
         <script>
             if(!localStorage.getItem("token")){

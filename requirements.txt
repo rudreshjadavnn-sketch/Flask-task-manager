@@ -1,4 +1,7 @@
 Flask
-pymongo
 PyJWT
 bcrypt
+pymongo
+python-dotenv
+gunicorn
+pytest

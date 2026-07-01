@@ -36,7 +36,7 @@
         <body>
             <div>
                 <h1>Login</h1><br>
-                <input type="mail" placeholder="Enter youre email" id="email"><br>
+                <input type="email" placeholder="Enter youre email" id="email"><br>
                 <input type="password" placeholder="Enter password" id="password"><br><br>
                 <button onclick="login()">Login</button>
                 <br>
@@ -44,11 +44,11 @@
             </div>
             <script>
                 async function login(){
-                    data={
+                    const data={
                         email:document.getElementById("email").value,
                         password:document.getElementById("password").value
                     };
-                    const response = await fetch("http://127.0.0.1:5000/login",
+                    const response = await fetch("/login",
                         {
                             method:"POST",
                             headers:{

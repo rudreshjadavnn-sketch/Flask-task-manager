@@ -249,7 +249,7 @@
             }
 
             async function addtask(){
-                data={
+                const data={
                     name: document.getElementById("name").value,
                     subj: document.getElementById("subj").value
                 };
@@ -257,7 +257,7 @@
                     alert("please enter task name and subject")
                 }
                 else{
-                const response = await fetch("http://127.0.0.1:5000/addtask",
+                const response = await fetch("/addtask",
                     {
                         method: "POST",
                         headers: {
@@ -281,7 +281,7 @@
             }
 
             async function loadtask(){
-                const response= await fetch("http://127.0.0.1:5000/gettask",{
+                const response= await fetch("/gettask",{
                     method: "POST",
                     headers:{
                         "content-Type":"application/json",
@@ -321,10 +321,10 @@
                 });
             }
             async function deletetask(taskid){
-                data={
+                const data={
                     taskid:taskid
                 }
-                const response=await fetch("http://127.0.0.1:5000/deletetask",{
+                const response=await fetch("/deletetask",{
                     method:"POST",
                     headers:{
                         "content-Type":"application/json",
@@ -341,7 +341,7 @@
 
 
             async function updatetask(){
-                data={
+                const data={
                     taskid:currentTaskId,
                     name: document.getElementById("name1").value,
                     subj: document.getElementById("subj1").value
@@ -350,7 +350,7 @@
                     alert("Please enter task name and subject")
                 }
                 else{
-                const response = await fetch("http://127.0.0.1:5000/updatetask",{
+                const response = await fetch("/updatetask",{
                     method:"POST",
                     headers:{
                         "content-Type":"application/json",
